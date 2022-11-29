@@ -7,14 +7,13 @@ import zio.test.Assertion._
 import zio.test._
 
 import java.net.URL
-import scala.collection.mutable
 
 object UrlDaoImplSpec extends AppSpec {
   override def appSpec: ZSpec[AppTestEnv, Any] =
     suite(getClass.getSimpleName)(
       suite("storeUrl")(testM("stores URL that can be loaded again") {
         for {
-          store     <- ZRef.make(mutable.Map.empty[UrlId, URL])
+          store     <- ZRef.make(Map.empty[UrlId, URL])
           dao        = new UrlDaoImpl(store)
           _         <- dao.storeUrl(UrlId("urlId"), new URL("http://example.org"))
           loadedUrl <- dao.loadUrl(UrlId("urlId"))
@@ -23,7 +22,7 @@ object UrlDaoImplSpec extends AppSpec {
       suite("loadUrl")(
         testM("returns nothing for unknown IDs") {
           for {
-            store          <- ZRef.make(mutable.Map.empty[UrlId, URL])
+            store          <- ZRef.make(Map.empty[UrlId, URL])
             dao             = new UrlDaoImpl(store)
             maybeLoadedUrl <- dao.loadUrl(UrlId("doesNotExist"))
           } yield assert(maybeLoadedUrl)(isNone)
