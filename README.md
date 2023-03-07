@@ -4,6 +4,8 @@ Practice project to refresh knowledge of
 - ZIO test
 - ZIO mock
 
+This runs on Java 17.
+
 Run it with `sbt run`.
 ```shell
 $ curl -X POST -d http://example.org http://localhost:8080
